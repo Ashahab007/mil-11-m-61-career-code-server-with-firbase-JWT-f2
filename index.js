@@ -8,6 +8,7 @@ const serviceAccount = require("./career-code-job-portal-firebase-adminsdk-fbsvc
 
 // 4.0 In m-61-5 and m-61-6 is skipped because some repeatative task that we have done is converted to a common function and custom hooks. That will learn later.
 
+// 1.10
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -85,8 +86,20 @@ async function run() {
       .db("carrerCode")
       .collection("applications");
 
+    app.get("/jobs", async (req, res) => {
+      const email = req.query.email;
+      const query = {};
+      if (email) {
+        query.hremail = email;
+      }
+
+      const cursor = jobsCollections.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // 3.0 Now my requiremnt is verifyToken for the jobposted user so set the verifyToken in jobposted url
-    app.get("/jobs", verifyToken, async (req, res) => {
+    app.get("/jobs/applications", verifyToken, async (req, res) => {
       const email = req.query.email;
 
       // 3.3 now verify the token Note: the decoded is previously done in 2.0
@@ -97,7 +110,7 @@ async function run() {
       const query = {};
 
       if (email) {
-        query.hremail = email;
+        query.hr_email = email;
       }
 
       const cursor = await jobsCollections.find(query).toArray();
