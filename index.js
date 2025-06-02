@@ -6,8 +6,6 @@ const admin = require("firebase-admin");
 // 1.10 import the key
 const serviceAccount = require("./career-code-job-portal-firebase-adminsdk-fbsvc-af9cb2cf5b.json");
 
-// 4.0 In m-61-5 and m-61-6 is skipped because some repeatative task that we have done is converted to a common function and custom hooks. That will learn later.
-
 // 1.10
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
