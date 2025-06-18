@@ -32,6 +32,7 @@ const verifyToken = async (req, res, next) => {
   console.log("header in middleware", authHeader); // after reload my Application u will see in the server.
 
   // 1.7 validate the token if authHeader don't have any token or dont starts with "Bearer " then sent a status message
+
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(403).send({ message: "Unauthorized Access" });
   }
